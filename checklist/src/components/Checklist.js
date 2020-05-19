@@ -47,11 +47,14 @@ const Checklist = props => {
             {item.task}
           </p>
 
-          {/* <img
+          <img
             src={edit}
-            onClick={() => props.editTask(item)}
+            onClick={() => {
+                setInput(item.task)
+                props.editTask(input)
+            }}
             className='icon'
-          /> */}
+          />
           <img
             src={trash}
             onClick={() => props.deleteTask(item.id)}
