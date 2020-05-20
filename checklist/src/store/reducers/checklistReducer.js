@@ -8,14 +8,7 @@ import {
 } from '../actions/checklistActions'
 
 export const initialState = {
-  checklist: [
-    {
-      id: randomId(),
-      task: 'read',
-      completed: false,
-      isEditing: false
-    }
-  ]
+  checklist: []
 }
 
 export const checklistReducer = (state = initialState, action) => {

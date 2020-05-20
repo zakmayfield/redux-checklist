@@ -94,7 +94,7 @@ const Checklist = props => {
   }
 
   return (
-    <div className="checklistContainer">
+    <div className='checklistContainer'>
       <form onSubmit={handleSubmit} className='addForm'>
         <input
           type='text'
@@ -105,16 +105,19 @@ const Checklist = props => {
           onChange={handleChange}
         />
         <Button
-          color='success'
-          size="sm"
-          className='addBtn'
-          style={{ height: "30px"}}
+          size='lg'
+          id='addBtn'
         >
           Add
         </Button>
       </form>
 
-      <Button onClick={() => props.clearCompleted()} color='secondary' block style={{ marginTop: "2vh", marginBottom: "5vh"}}>
+      <Button
+        onClick={() => props.clearCompleted()}
+        color='secondary'
+        block
+        id='clearBtn'
+      >
         Clear Completed
       </Button>
 
@@ -137,7 +140,14 @@ const Checklist = props => {
                 value={input.edit.task}
                 onChange={handleEditChange}
               />
-              <Button className='editBtn' color="success" size="sm" style={{height: "30px"}}>Confirm</Button>
+              <Button
+                id='editBtn'
+                color='success'
+                size='sm'
+                style={{ height: '30px' }}
+              >
+                Confirm
+              </Button>
             </form>
           ) : (
             <p
