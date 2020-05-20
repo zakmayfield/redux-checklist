@@ -1,96 +1,158 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import {
   addTask,
   deleteTask,
   toggleTask,
   clearCompleted,
-  editTask,
-  editConfirm
+  editTaskSet,
+  editTaskConfirm
 } from '../store/actions/checklistActions'
+import { Button } from 'reactstrap'
 import trash from '../images/Trash.png'
-import edit from '../images/Edit.png'
 import circle from '../images/circle.png'
 import check from '../images/check-complete.png'
 
 const Checklist = props => {
-  const [input, setInput] = useState('')
-  const [edit, setEdit] = useState('')
+  const [input, setInput] = useState({
+    add: '',
+    edit: {
+      id: '',
+      task: '',
+      completed: false,
+      isEditing: false
+    }
+  })
 
   const handleChange = e => {
+    let name = e.target.name
     let value = e.target.value
-    setInput(value)
+    setInput({
+      ...input,
+      [name]: value
+    })
   }
 
   const handleSubmit = e => {
     e.preventDefault()
-    
-    if (!input) {
+
+    if (!input.add) {
       alert('please add a task')
     } else {
-      props.addTask(input)
+      props.addTask(input.add)
     }
-    
-    setInput('')
+
+    setInput({
+      add: '',
+      edit: ''
+    })
   }
-  
+
   const handleEditChange = e => {
+    let name = e.target.name
     let value = e.target.value
-    setEdit(value)
+    setInput({
+      ...input,
+      edit: {
+        ...input.edit,
+        [name]: value
+      }
+    })
+  }
+
+  const toggleEdit = item => {
+    props.editTaskSet(item)
+    setInput({
+      ...input,
+      edit: {
+        id: item.id,
+        task: item.task,
+        completed: item.completed,
+        isEditing: item.isEditing
+      }
+    })
   }
 
   const handleEditSubmit = e => {
     e.preventDefault()
+
+    if (!input.edit.task) {
+      alert('please edit the task')
+    } else {
+      props.editTaskConfirm(input.edit)
+    }
+
+    setInput({
+      add: '',
+      edit: {
+        id: '',
+        task: '',
+        completed: false,
+        isEditing: false
+      }
+    })
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="checklistContainer">
+      <form onSubmit={handleSubmit} className='addForm'>
         <input
           type='text'
           placeholder='Read a book'
+          name='add'
           required
-          value={input}
+          value={input.add}
           onChange={handleChange}
         />
-        <button style={{ marginLeft: '1vw' }}>Add</button>
+        <Button
+          color='success'
+          size="sm"
+          className='addBtn'
+          style={{ height: "30px"}}
+        >
+          Add
+        </Button>
       </form>
 
-      <button onClick={() => props.clearCompleted()}>Clear Completed</button>
+      <Button onClick={() => props.clearCompleted()} color='secondary' block style={{ marginTop: "2vh", marginBottom: "5vh"}}>
+        Clear Completed
+      </Button>
 
       {props.checklist.map(item => (
         <div key={item.id} className='taskContainer'>
           <img
             src={item.completed ? check : circle}
+            alt='icon'
             style={{ marginRight: '2vw' }}
             className='icon'
             onClick={() => props.toggleTask(item.id)}
           />
 
-          <p className={item.completed ? 'completed' : 'not-completed'}>
-            {item.task}
-          </p>
-
-          {/* {item.isEditing ? (
-            <form onSubmit={handleEditSubmit}>
-              <input type='text' value={edit} onChange={handleEditChange} />
+          {item.isEditing ? (
+            <form onSubmit={handleEditSubmit} className='editForm'>
+              <input
+                type='text'
+                name='task'
+                required
+                value={input.edit.task}
+                onChange={handleEditChange}
+              />
+              <Button className='editBtn' color="success" size="sm" style={{height: "30px"}}>Confirm</Button>
             </form>
           ) : (
             <p
               className={item.completed ? 'completed' : 'not-completed'}
-              onClick={() => {
-                props.editTask(item)
-                setEdit(item.task)
-              }}
+              onClick={() => toggleEdit(item)}
             >
               {item.task}
             </p>
-          )} */}
+          )}
 
           <img
             src={trash}
             onClick={() => props.deleteTask(item.id)}
             className='icon'
+            alt='icon'
           />
         </div>
       ))}
@@ -109,6 +171,6 @@ export default connect(mapStateToProps, {
   deleteTask,
   toggleTask,
   clearCompleted,
-  editTask,
-  editConfirm
+  editTaskSet,
+  editTaskConfirm
 })(Checklist)

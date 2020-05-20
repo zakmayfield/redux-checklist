@@ -3,12 +3,19 @@ import {
   DELETE_TASK,
   TOGGLE_TASK,
   CLEAR_COMPLETED,
-  EDIT_TASK,
-  EDIT_CONFIRM
+  EDIT_TASK_SET,
+  EDIT_TASK_CONFIRM
 } from '../actions/checklistActions'
 
 export const initialState = {
-  checklist: []
+  checklist: [
+    {
+      id: randomId(),
+      task: 'read',
+      completed: false,
+      isEditing: false
+    }
+  ]
 }
 
 export const checklistReducer = (state = initialState, action) => {
@@ -49,7 +56,7 @@ export const checklistReducer = (state = initialState, action) => {
         checklist: state.checklist.filter(task => task.id !== action.payload)
       }
 
-    case EDIT_TASK:
+    case EDIT_TASK_SET:
       return {
         ...state,
         checklist: state.checklist.map(task =>
@@ -57,11 +64,20 @@ export const checklistReducer = (state = initialState, action) => {
         )
       }
 
-    case EDIT_CONFIRM:
-        return {
-            ...state,
-            checklist: state.checklist.map(item => item.id === action.payload.id ? {...item, task: action.payload.task} : item)
-          }
+    case EDIT_TASK_CONFIRM:
+      console.log('EDIT TASK CONFIRM ------> ', action.payload)
+      const editedTask = {
+        id: action.payload.id,
+        task: action.payload.task,
+        completed: action.payload.completed,
+        isEditing: action.payload.isEditing
+      }
+      return {
+        ...state,
+        checklist: state.checklist.map(item =>
+          item.id === action.payload.id ? editedTask : item
+        )
+      }
 
     default:
       return state

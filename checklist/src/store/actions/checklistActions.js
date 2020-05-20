@@ -4,8 +4,8 @@ export const ADD_TASK = 'ADD_TASK'
 export const DELETE_TASK = 'DELETE_TASK'
 export const TOGGLE_TASK = 'TOGGLE_TASK'
 export const CLEAR_COMPLETED = 'CLEAR_COMPLETED'
-export const EDIT_TASK = 'EDIT_TASK'
-export const EDIT_CONFIRM = 'EDIT_CONFIRM'
+export const EDIT_TASK_SET = 'EDIT_TASK_SET'
+export const EDIT_TASK_CONFIRM = 'EDIT_CONFIRM'
 
 
 export const addTask = task => {
@@ -24,10 +24,10 @@ export const clearCompleted = () => {
   return { type: CLEAR_COMPLETED }
 }
 
-export const editTask = task => {
-  return { type: EDIT_TASK, payload: task }
+export const editTaskSet = task => {
+  return { type: EDIT_TASK_SET, payload: task }
 }
 
-export const editConfirm = task => {
-  return { type: EDIT_CONFIRM, payload: task }
+export const editTaskConfirm = task => {
+  return { type: EDIT_TASK_CONFIRM, payload: task }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Checklist from './components/Checklist'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

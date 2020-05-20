@@ -37,10 +37,23 @@
   }
 }
 
+.checklistContainer {
+  width: 300px;
+  display: flex;
+  flex-flow: column;
+}
+
 .taskContainer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; 
+  align-self: center;
+  width: 100%;
+  margin: 1vh 0;
+}
+
+.taskContainer p {
+  margin: 0;
 }
 
 .completed {
@@ -53,4 +66,41 @@
   width: 20px;
   margin-left: 2vw;
   cursor: pointer;
+}
+
+.addForm {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.addForm input{
+  border: none;
+  border-bottom: 2px solid rgb(208, 0, 0);
+  background: #282c34;
+  color: white;
+  padding: 1vw 1vh;
+  outline: none;
+  
+}
+
+.editForm {
+  display: flex;
+  justify-content: space-around;
+}
+
+.editForm input{
+  border: none;
+  border-bottom: 2px solid rgb(208, 0, 0);
+  background: #282c34;
+  color: white;
+  padding: 1vw 1vh;
+  outline: none;
+  width: 60%;
+}
+
+.editBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
