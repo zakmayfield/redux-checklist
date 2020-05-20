@@ -5,13 +5,17 @@ import {
   deleteTask,
   toggleTask,
   clearCompleted,
-  editTask
+  editTask,
+  editConfirm
 } from '../store/actions/checklistActions'
 import trash from '../images/Trash.png'
 import edit from '../images/Edit.png'
+import circle from '../images/circle.png'
+import check from '../images/check-complete.png'
 
 const Checklist = props => {
   const [input, setInput] = useState('')
+  const [edit, setEdit] = useState('')
 
   const handleChange = e => {
     let value = e.target.value
@@ -20,8 +24,23 @@ const Checklist = props => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    props.addTask(input)
+    
+    if (!input) {
+      alert('please add a task')
+    } else {
+      props.addTask(input)
+    }
+    
     setInput('')
+  }
+  
+  const handleEditChange = e => {
+    let value = e.target.value
+    setEdit(value)
+  }
+
+  const handleEditSubmit = e => {
+    e.preventDefault()
   }
 
   return (
@@ -30,6 +49,7 @@ const Checklist = props => {
         <input
           type='text'
           placeholder='Read a book'
+          required
           value={input}
           onChange={handleChange}
         />
@@ -40,21 +60,33 @@ const Checklist = props => {
 
       {props.checklist.map(item => (
         <div key={item.id} className='taskContainer'>
-          <p
-            className={item.completed ? 'completed' : 'not-completed'}
+          <img
+            src={item.completed ? check : circle}
+            style={{ marginRight: '2vw' }}
+            className='icon'
             onClick={() => props.toggleTask(item.id)}
-          >
+          />
+
+          <p className={item.completed ? 'completed' : 'not-completed'}>
             {item.task}
           </p>
 
-          <img
-            src={edit}
-            onClick={() => {
-                setInput(item.task)
-                props.editTask(input)
-            }}
-            className='icon'
-          />
+          {/* {item.isEditing ? (
+            <form onSubmit={handleEditSubmit}>
+              <input type='text' value={edit} onChange={handleEditChange} />
+            </form>
+          ) : (
+            <p
+              className={item.completed ? 'completed' : 'not-completed'}
+              onClick={() => {
+                props.editTask(item)
+                setEdit(item.task)
+              }}
+            >
+              {item.task}
+            </p>
+          )} */}
+
           <img
             src={trash}
             onClick={() => props.deleteTask(item.id)}
@@ -77,5 +109,6 @@ export default connect(mapStateToProps, {
   deleteTask,
   toggleTask,
   clearCompleted,
-  editTask
+  editTask,
+  editConfirm
 })(Checklist)
