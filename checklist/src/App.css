@@ -1,0 +1,106 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.checklistContainer {
+  width: 300px;
+  display: flex;
+  flex-flow: column;
+}
+
+.taskContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  align-self: center;
+  width: 100%;
+  margin: 1vh 0;
+}
+
+.taskContainer p {
+  margin: 0;
+}
+
+.completed {
+  text-decoration: line-through;
+  color: lightgray;
+  opacity: .25;
+}
+
+.icon {
+  width: 20px;
+  margin-left: 2vw;
+  cursor: pointer;
+}
+
+.addForm {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.addForm input{
+  border: none;
+  border-bottom: 2px solid rgb(208, 0, 0);
+  background: #282c34;
+  color: white;
+  padding: 1vw 1vh;
+  outline: none;
+  
+}
+
+.editForm {
+  display: flex;
+  justify-content: space-around;
+}
+
+.editForm input{
+  border: none;
+  border-bottom: 2px solid rgb(208, 0, 0);
+  background: #282c34;
+  color: white;
+  padding: 1vw 1vh;
+  outline: none;
+  width: 60%;
+}
+
+.editBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
